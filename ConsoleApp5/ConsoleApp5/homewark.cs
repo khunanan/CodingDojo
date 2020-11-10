@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 
 namespace ConsoleApp5
@@ -9,24 +10,38 @@ namespace ConsoleApp5
     {
         public static string[] led = { "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]" };
         public string DisplayLEDOnScreen(string ledNo)
-        {
-           
+        {   
             string sum = null;
-            if (ledNo == "A" )
+            List<string> x = new List<string>
             {
-                led[9] = led[9] == "[ ]" ? "[!]" : "[ ]";
+                "1","2","3","4","5","6","7","8","9","A"
+            };
+            bool check = x.Any(x => ledNo == x);
+            if (check == true)
+            {
+                if (ledNo == "A")
+                {
+                    led[9] = led[9] == "[ ]" ? "[!]" : "[ ]";
+                }
+                else
+                {
+                    int numled = int.Parse(ledNo);
+                    numled--;
+                    led[numled] = led[numled] == "[ ]" ? "[!]" : "[ ]";
+                }
+                foreach (string item in led)
+                {
+                    sum += item;
+                }
+                return sum; 
             }
             else
             {
-                int numled = int.Parse(ledNo);
-                numled--;
-                led[numled] = led[numled] == "[ ]" ? "[!]" : "[ ]";
+                return "Not validation !!";
+
             }
-            foreach (string item in led)
-            {
-                sum += item;
-            }
-            return sum;
+
+            
         }
 
         public string LoadState()
